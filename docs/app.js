@@ -1,0 +1,1 @@
+const bar=document.getElementById('progress');function tick(){const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;bar.style.width=(max>0?(h.scrollTop/max*100):0)+'%'}document.addEventListener('scroll',tick,{passive:true});tick();
