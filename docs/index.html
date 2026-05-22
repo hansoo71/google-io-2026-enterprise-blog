@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google I/O 2026 이후 기업 AI 경쟁 구도 — Agent Runtime, Governance, Distribution</title>
+  <meta name="description" content="Google I/O 2026 발표를 AWS Bedrock AgentCore, Microsoft Foundry Agent Service/Azure AI Gateway와 비교해 기업 AI 운영 구조 관점에서 재해석한 한국어 전문가 블로그." />
+  <meta property="og:title" content="Google I/O 2026 이후 기업 AI 경쟁 구도" />
+  <meta property="og:description" content="모델 경쟁 이후의 전장: Agent Runtime, Governance, Distribution." />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="site-header" aria-label="Article header">
+    <a class="skip" href="#main">본문 바로가기</a>
+    <nav class="nav-shell">
+      <div class="publication-mark" aria-label="Enterprise AI Field Note">FIELD NOTE</div>
+      <div class="nav-meta">Google I/O 2026 · AWS · Azure · 2026-05-22 KST</div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article class="article-shell">
+      <section class="hero editorial-grid">
+        <div class="hero-kicker">ENTERPRISE AI / CLOUD STRATEGY</div>
+        <h1>Google I/O 2026은 “모델 발표”가 아니라 <em>에이전트 운영체계 전쟁</em>의 신호탄이다</h1>
+        <p class="dek">Gemini 3.5, Gemini Omni, Antigravity 2.0, Managed Agents, Workspace AI, Search Agents는 각각의 제품 발표처럼 보이지만 기업 입장에서는 하나의 메시지로 읽힌다. 클라우드 사업자들의 다음 전장은 모델 성능이 아니라 <strong>에이전트 런타임, 데이터 접근, 권한, 관측성, 비용 통제, 업무 배포면</strong>이다.</p>
+        <aside class="issue-card">
+          <span class="issue-label">Executive thesis</span>
+          <p>AI PoC의 병목은 “더 똑똑한 모델”이 아니라 “운영 가능한 에이전트 시스템”으로 이동했다.</p>
+          <ul>
+            <li><b>Google</b> — 사용자 접점과 모델·앱 통합</li>
+            <li><b>AWS</b> — 생산 운영용 AgentCore 인프라</li>
+            <li><b>Azure</b> — M365·Entra·Foundry 중심 기업 배포면</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="feature-image feature-image--wide">
+        <img src="assets/images/agentic-runtime-map.png" alt="2026 Agentic AI Runtime Map 인포그래픽 — Google, AWS, Azure의 기업 AI 운영면 비교" />
+        <figcaption>GPT Image 2 생성 인포그래픽. 로고·워드마크 없이 editorial data graphic 스타일만 적용.</figcaption>
+      </section>
+
+      <section class="story-section" id="context">
+        <div class="section-number">01</div>
+        <div class="section-copy">
+          <p class="overline">WHY IT MATTERS</p>
+          <h2>최근 기사·블로그가 공통으로 강조한 변화</h2>
+          <p>Reuters, Engadget, Cybernews, VentureBeat, MarkTechPost 등 최근 보도는 표현은 다르지만 같은 방향을 가리킨다. Google은 I/O 2026에서 소비자·개발자·기업을 동시에 겨냥했고, 특히 저비용/고속 모델과 에이전트형 개발·업무 경험을 전면에 내세웠다.</p>
+        </div>
+        <div class="trend-strip">
+          <article><span>01</span><h3>모델 성능 경쟁 → 에이전트 실행 경쟁</h3><p>Gemini 3.5 Flash의 메시지는 단순 지능 향상이 아니라, 장기 작업·코딩·도구 호출·비용 효율을 모두 만족하는 “실행 모델”이다.</p></article>
+          <article><span>02</span><h3>AI 앱 → AI 작업자</h3><p>Antigravity 2.0과 Managed Agents는 개발자가 AI에게 답을 받는 단계를 넘어, 여러 하위 에이전트가 병렬로 프로젝트를 수행하는 구조를 제시한다.</p></article>
+          <article><span>03</span><h3>검색·메일·문서·브라우저가 업무 런타임화</h3><p>Search Agents, Workspace AI, Gemini Spark는 사용자의 개인·업무 맥락 위에서 백그라운드로 감시·분석·실행하는 에이전트 표면을 만든다.</p></article>
+        </div>
+      </section>
+
+      <section class="story-section dense" id="google">
+        <div class="section-number">02</div>
+        <div class="section-copy">
+          <p class="overline">GOOGLE I/O 2026 READOUT</p>
+          <h2>Google의 방향성: “Gemini everywhere”에서 “Agents everywhere”로</h2>
+          <p>핵심은 발표 항목의 수가 아니라 결합 방식이다. 모델, 개발자 도구, Workspace, Search, Android/XR가 같은 방향으로 움직이면 Google은 별도 AI 포털이 아니라 사용자의 실제 업무·생활 접점 안에서 에이전트를 실행할 수 있다.</p>
+        </div>
+        <div class="bullet-ledger">
+          <div><b>Gemini 3.5 Flash</b><p>장기 에이전트·코딩·비용 효율을 겨냥한 주력 실행 모델.</p></div>
+          <div><b>Gemini Omni</b><p>텍스트·이미지·오디오·비디오 입력을 결합해 우선 비디오 출력부터 지원하는 멀티모달 생성 축.</p></div>
+          <div><b>Antigravity 2.0</b><p>데스크톱 앱, CLI, SDK, subagents, hooks, async/scheduled task로 개발 업무를 멀티 에이전트화.</p></div>
+          <div><b>Managed Agents in Gemini API</b><p>Hosted harness, Linux sandbox, 파일/코드 실행, 웹 브라우징, Markdown 기반 instruction/skill.</p></div>
+          <div><b>Workspace·Search·XR</b><p>AI Inbox, Docs Live, Gemini Spark, Search Agents, Android XR로 사용자 접점을 에이전트 표면으로 전환.</p></div>
+        </div>
+      </section>
+
+      <section class="pullquote-block">
+        <p>Google의 가장 큰 무기는 개별 클라우드 기능이 아니라 검색·브라우저·메일·문서·모바일·유튜브까지 이어지는 사용자의 실제 업무/생활 접점이다.</p>
+        <span>기업 전략 관점 해석</span>
+      </section>
+
+      <section class="feature-image">
+        <img src="assets/images/platform-comparison-chart.png" alt="Google AWS Azure AI platform comparison chart" />
+        <figcaption>GPT Image 2 생성 비교 이미지. 상대 강점은 사용자 유통망, 생산 런타임, 보안·ID, Gateway, 개방성, adoption 축으로 표현.</figcaption>
+      </section>
+
+      <section class="story-section" id="compare">
+        <div class="section-number">03</div>
+        <div class="section-copy">
+          <p class="overline">COMPETITIVE ANALYSIS</p>
+          <h2>AWS·Azure와 비교하면 Google의 강점과 약점이 더 선명해진다</h2>
+        </div>
+        <div class="comparison-grid" role="table" aria-label="Google AWS Azure AI agent strategy comparison">
+          <div class="cell head">구분</div><div class="cell head">Google</div><div class="cell head">AWS</div><div class="cell head">Azure / Microsoft</div>
+          <div class="cell key">핵심 전략</div><div class="cell">Gemini를 검색·Workspace·Android·개발도구에 수직 통합</div><div class="cell">Bedrock AgentCore로 생산 운영 인프라 제공</div><div class="cell">Foundry Agent Service + Copilot/M365 + Entra 기반 기업 배포</div>
+          <div class="cell key">런타임</div><div class="cell">Managed Agents, Antigravity harness, Linux sandbox</div><div class="cell">Runtime, Browser, Code Interpreter, Memory, Gateway</div><div class="cell">Prompt/Workflow/Hosted agents, isolated Micro VMs</div>
+          <div class="cell key">거버넌스</div><div class="cell">Gemini Enterprise, Agent Gateway, DLP, Cloud project 연계</div><div class="cell">IAM, VPC, PrivateLink, CloudWatch, Evaluations, Policy</div><div class="cell">Entra, RBAC, APIM AI Gateway, token limit, content safety</div>
+          <div class="cell key">개방성</div><div class="cell">Google 생태계 경험이 강함, API/Agent Platform 확장</div><div class="cell">any model / any framework, MCP/A2A 친화</div><div class="cell">Foundry model catalog + 외부 Provider + MCP/A2A API 관리</div>
+          <div class="cell key">차별적 강점</div><div class="cell">최종 사용자 접점과 데이터 맥락</div><div class="cell">운영 안정성·보안·인프라 중립성</div><div class="cell">M365 배포면·기업 ID·업무 앱 침투력</div>
+        </div>
+      </section>
+
+      <section class="story-section insights" id="insights">
+        <div class="section-number">04</div>
+        <div class="section-copy">
+          <p class="overline">FIVE INSIGHTS</p>
+          <h2>기업 입장에서 도출되는 5가지 시사점</h2>
+        </div>
+        <div class="insight-list">
+          <article><span>Insight 1</span><h3>에이전트 도입의 기준은 “모델 벤치마크”에서 “운영 제어면”으로 바뀐다</h3><p>Google은 Managed Agents, AWS는 AgentCore, Azure는 Foundry Agent Service/APIM AI Gateway를 통해 모두 같은 문제를 겨냥한다. 기업은 앞으로 모델 정확도만 비교하면 안 된다. 런타임 격리, 권한 위임, 도구 호출 로그, 평가·회귀 테스트, 네트워크 격리, 비용 한도까지 묶어 평가해야 한다.</p></article>
+          <article><span>Insight 2</span><h3>Google의 경쟁력은 “AI가 일어나는 장소”를 장악하는 데 있다</h3><p>AWS가 인프라 운영, Azure가 M365 기업 배포면에 강하다면 Google은 Search, Gmail, Docs, YouTube, Android, Chrome, XR 등 사용자 행동의 시작점을 갖고 있다. Search Agents와 Workspace AI가 성숙하면, 기업 사용자는 별도 AI 포털보다 기존 업무 접점에서 에이전트를 호출하게 된다.</p></article>
+          <article><span>Insight 3</span><h3>AWS는 “에이전트용 클라우드 네이티브 런타임”에서 가장 명확한 포지션을 잡고 있다</h3><p>AgentCore는 Runtime, Memory, Identity, Gateway, Browser, Code Interpreter, Observability를 분리 가능한 서비스로 제공한다. 2026년 릴리스 노트의 BYO filesystem, Agent Performance Loop, payments preview는 에이전트가 실제 파일·평가·결제·업무 실행으로 확장되는 방향을 보여준다.</p></article>
+          <article><span>Insight 4</span><h3>Azure는 “기업 내부 유통망”과 “정책 게이트웨이”가 강점이다</h3><p>Foundry Agent Service는 prompt, workflow, hosted agent를 모두 포괄하고 Teams, Microsoft 365 Copilot, Entra Agent Registry로 배포할 수 있다. APIM AI Gateway는 OpenAI/Anthropic 호환 모델, Amazon Bedrock 같은 외부 백엔드, MCP 서버, A2A agent API를 관리 대상으로 포함한다.</p></article>
+          <article><span>Insight 5</span><h3>멀티클라우드 AI 전략은 “모델 멀티벤더”가 아니라 “에이전트 통제 표준화”가 되어야 한다</h3><p>MCP와 A2A가 확산되면 도구 연결은 쉬워지지만, 동시에 보안 경계도 흐려진다. 기업은 Google/AWS/Azure 중 하나를 고르는 문제를 넘어 공통 agent registry, tool contract, identity delegation, audit schema, evaluation pipeline을 표준화해야 한다.</p></article>
+        </div>
+      </section>
+
+      <section class="feature-image">
+        <img src="assets/images/enterprise-agent-operating-model.png" alt="Enterprise Agent Operating Model layered diagram" />
+        <figcaption>GPT Image 2 생성 운영모델 다이어그램. 데이터/API부터 업무 배포면까지 에이전트 운영 계층을 요약.</figcaption>
+      </section>
+
+      <section class="story-section playbook" id="playbook">
+        <div class="section-number">05</div>
+        <div class="section-copy">
+          <p class="overline">ENTERPRISE PLAYBOOK</p>
+          <h2>기업이 지금 점검해야 할 질문</h2>
+        </div>
+        <div class="questions">
+          <div><strong>01</strong><p>우리 조직의 에이전트는 사람 계정 권한을 그대로 쓰는가, 별도 identity와 위임 토큰을 쓰는가?</p></div>
+          <div><strong>02</strong><p>도구 호출, 데이터 접근, 파일 생성, 외부 전송, 결제 같은 action에 승인·감사 기준이 있는가?</p></div>
+          <div><strong>03</strong><p>PoC 평가가 데모 품질에 머무는가, production trace 기반 회귀 테스트·사용자 시뮬레이션으로 이어지는가?</p></div>
+          <div><strong>04</strong><p>AI Gateway가 모델 API뿐 아니라 MCP 서버, A2A API, 내부 REST API까지 정책적으로 관리하는가?</p></div>
+          <div><strong>05</strong><p>Google Workspace, Microsoft 365, AWS workloads 중 어디가 실제 업무 에이전트의 1차 배포면인가?</p></div>
+        </div>
+      </section>
+
+      <section class="source-section" id="sources">
+        <p class="overline">SOURCES</p>
+        <h2>주요 참고 출처</h2>
+        <ul>
+          <li>Google Blog — 100 things we announced at I/O 2026, Gemini 3.5, Gemini Omni, Antigravity, Managed Agents, Workspace, Android XR.</li>
+          <li>Google Cloud Blog Korea — Innovations from Google I/O 26 on Google Cloud.</li>
+          <li>AWS News Blog / AWS ML Blog / Bedrock AgentCore docs — AgentCore preview, GA, 2026 release notes.</li>
+          <li>Microsoft Learn — Microsoft Foundry Agent Service, Azure API Management AI gateway capabilities.</li>
+          <li>Google News RSS discovery — Reuters, Engadget, Cybernews, VentureBeat, MarkTechPost 등 최근 기사 헤드라인.</li>
+          <li>내부 GBrain/LLM Wiki — Google I/O 2026 관련 GCP Blog 수집본, Gmail/AlphaSignal 수집본.</li>
+        </ul>
+        <p class="source-note">주의: X 라이브 검색은 현재 xurl 설치/인증 및 x.com 로그인 게이트 문제로 직접 검증하지 못했다. 본문은 공식 출처를 사실 근거로 삼고, 소셜 반응은 내부 수집 뉴스레터 기반 간접 신호로만 해석했다.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Enterprise AI Field Note · Korean executive/enterprise analysis · No external logo assets used.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
